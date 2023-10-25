@@ -18,7 +18,7 @@ dotenv.config()
 
 const functionRegistry = new FunctionRegistry()
 functionRegistry.registerFunctions(yrFunctions)
-functionRegistry.registerFunctions(exampleFunctions)
+//functionRegistry.registerFunctions(exampleFunctions)
 
 //functionRegistry.registerFunctions(hueFunctions)
 //functionRegistry.registerFunctions(kassalappenFunctions)
