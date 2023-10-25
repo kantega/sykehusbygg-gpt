@@ -3,13 +3,15 @@ import path from 'path'
 import * as fs from 'fs';
 import http from 'http'
 import { Server } from 'socket.io'
-import { getDefaultMessages, handleMessages, transcribeAudio } from "./gpt/gpt"
+import { transcribeAudio } from "./gpt/whisper"
 import { Message } from "./gpt/types"
 import { UploadAudioData } from "./types"
 import dotenv from 'dotenv'
 import { FunctionRegistry } from "./gpt/functionRegistry"
 import { yrFunctions } from "./yr/yr"
 import { exampleFunctions } from "./example/addTwoNumbers"
+import { callGptLoop } from "./gpt/gpt";
+import { getDefaultMessages } from "./gpt/baseContext";
 //import { hueFunctions } from "./hue/hue"
 //import { kassalappenFunctions } from "./kassalappen/kassalappen"
 dotenv.config()
@@ -40,7 +42,7 @@ io.on('connection', async (socket) => {
   try {
     const messages = defaultMessages
     console.log(messages.length)
-    const tokensUsed = await handleMessages(
+    const tokensUsed = await callGptLoop(
       process.env.OPENAI_API_KEY!, 
       messages, 
       functionRegistry
@@ -84,12 +86,9 @@ io.on('connection', async (socket) => {
 
   socket.on('newMessage', async (messages, callback) => {
     try {
-      const tokensUsed = await handleMessages(process.env.OPENAI_API_KEY!, messages, functionRegistry)
+      const result = await callGptLoop(process.env.OPENAI_API_KEY!, messages, functionRegistry)
       callback(
-        { 
-          messages: messages,
-          tokensUsed: tokensUsed
-        }
+        result
       )
     } catch(err) {
       console.error(err)
