@@ -12,12 +12,16 @@ import { yrFunctions } from "./yr/yr"
 import { exampleFunctions } from "./example/addTwoNumbers"
 import { callGptLoop } from "./gpt/gpt";
 import { getDefaultMessages } from "./gpt/baseContext";
+import {regionalHealthAuthoritiesFunctions} from "./ks/regionalHealthAuthorities";
 //import { hueFunctions } from "./hue/hue"
 //import { kassalappenFunctions } from "./kassalappen/kassalappen"
 dotenv.config()
 
+console.log(process.env.KS_STOLAVS_CLIENT_ID)
+
 const functionRegistry = new FunctionRegistry()
 functionRegistry.registerFunctions(yrFunctions)
+functionRegistry.registerFunctions(regionalHealthAuthoritiesFunctions)
 //functionRegistry.registerFunctions(exampleFunctions)
 
 //functionRegistry.registerFunctions(hueFunctions)
