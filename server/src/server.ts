@@ -14,6 +14,7 @@ import { callGptLoop } from "./gpt/gpt";
 import { getDefaultMessages } from "./gpt/baseContext";
 import {regionalHealthAuthoritiesFunctions} from "./ks/regionalHealthAuthorities";
 import {getRoomsFunctions} from "./ks/room";
+import {getBuildingsFunctions} from "./ks/building";
 //import { hueFunctions } from "./hue/hue"
 //import { kassalappenFunctions } from "./kassalappen/kassalappen"
 dotenv.config()
@@ -24,6 +25,7 @@ const functionRegistry = new FunctionRegistry()
 functionRegistry.registerFunctions(yrFunctions)
 functionRegistry.registerFunctions(regionalHealthAuthoritiesFunctions)
 functionRegistry.registerFunctions(getRoomsFunctions)
+functionRegistry.registerFunctions(getBuildingsFunctions)
 //functionRegistry.registerFunctions(exampleFunctions)
 
 //functionRegistry.registerFunctions(hueFunctions)

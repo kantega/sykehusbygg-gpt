@@ -34,6 +34,11 @@ export async function getOrganizations() {
   return z.array(organizationZ).parse(json);
 }
 
+export async function getBuildings() {
+  const json = await fetchFromKS("/buildings");
+  return z.array(buildingZ).parse(json);
+}
+
 export async function getHovedfunksjoner() {
   const json = await fetchFromKS("/primary-functions");
   return z.array(primaryFunctionZ).parse(json);
@@ -58,6 +63,10 @@ const baseSchema = z.object({
   code: z.string(),
   archived: z.boolean(),
 });
+
+const buildingZ = baseSchema.extend({
+  built_in_year: z.number(),
+})
 
 export type BaseItem = z.infer<typeof baseSchema>;
 
